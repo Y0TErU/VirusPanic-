@@ -1,9 +1,10 @@
 #include <DxLib.h>
+#include "Scene/.h/Scene.h"
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
 	ChangeWindowMode(true);
-	SetGraphMode(800, 600, 32);
+	SetGraphMode(1920, 1080, 32);
 	if (DxLib_Init() == -1)		// ＤＸライブラリ初期化処理
 	{
 		return -1;			// エラーが起きたら直ちに終了
@@ -12,7 +13,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	while (ProcessMessage() == 0 &&
 		CheckHitKey(KEY_INPUT_ESCAPE) == 0)
 	{
-
+		ExcuteScene();
 		
 
 		ClearDrawScreen();
