@@ -14,7 +14,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		CheckHitKey(KEY_INPUT_ESCAPE) == 0)
 	{	
 
-		ExcuteScene();
+		scene.Execute();
 
 	}
 
