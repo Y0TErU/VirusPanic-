@@ -7,63 +7,36 @@ TitleScene titleScene;
 GameScene gameScene;
 ClearScene clearScene;
 
-Scene scene;
+int currentType = sceneTitle;	//シーンタイプ
 
 void Scene::Execute()
 {
 	switch (currentType)
 	{
-	case Title:
-		titleScene.Execute(currentStep);
+	case sceneTitle:
+		titleScene.Execute();
 		break;
-	case Game:
-		gameScene.Execute(currentStep);
+	case sceneGame:
+		gameScene.Execute();
 		break;
-	case Clear:
-		clearScene.Execute(currentStep);
+	case sceneClear:
+		clearScene.Execute();
 		break;
 	}
 }
 
-void Scene::ExecuteType(int currentType_)
+void ExecuteScenetype()
 {
-	if (currentType_ == Title)
+	if (currentType == sceneTitle)
 	{
-		currentType = Game;
+		currentType = sceneGame;
 	}
-	else if (currentType_ == Game)
+	else if (currentType == sceneGame)
 	{
-		currentType = Clear;
+		currentType = sceneClear;
 	}
-	else if (currentType_ == Clear)
+	else if (currentType == sceneClear)
 	{
-		currentType = Title;
+		currentType = sceneTitle;
 	}
-}
-
-void Scene::ExecuteStep(int currentStep_)
-{
-	if (currentStep_ == Init)
-	{
-		currentStep = Update;
-	}
-	else if (currentStep_ == Update)
-	{
-		currentStep = Terminate;
-	}
-	else if (currentStep_ == Terminate)
-	{
-		currentStep = Init;
-	}
-}
-
-int Scene::GetCurrentType()
-{
-	return currentType;
-}
-
-int Scene::GetCurrentStep()
-{
-	return currentStep;
-
 }

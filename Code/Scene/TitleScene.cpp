@@ -3,46 +3,61 @@
 #include "Scene.h"
 #include "TitleScene.h"
 
-void TitleScene::Execute(int sceneStep_)
+void TitleScene::Execute()
 {
-	switch (sceneStep_)
+	switch (currentStep)
 	{
 	case 0:
-		Initialize(sceneStep_);
+		Initialize();
 		break;
 	case 1:
-		Update(sceneStep_);
+		Update();
 		break;
 	case 2:
-		Terminate(sceneStep_);
+		Terminate();
 		break;
 	}
 }
 
-void TitleScene::Initialize(int sceneStep_)
+void TitleScene::Initialize()
 {
 
-	scene.ExecuteStep(sceneStep_);
+	ExecuteSceneStep();
 }
 
-void TitleScene::Update(int sceneStep_)
+void TitleScene::Update()
 {
 
 	ClearDrawScreen();
 
-	DrawCircle(300, 300, 3, GetColor(255, 255, 255),true);
+	DrawCircle(300, 300, 100, GetColor(255, 255, 255),true);
 
 	ScreenFlip();
 
 	if (CheckHitKey(KEY_INPUT_RETURN))
 	{
-		scene.ExecuteStep(scene.GetCurrentStep());
+		ExecuteSceneStep();
 	}
 }
 
-void TitleScene::Terminate(int sceneStep_)
+void TitleScene::Terminate()
 {
+	ExecuteSceneStep();
+	ExecuteScenetype();
+}
 
-	scene.ExecuteType(scene.GetCurrentType());
-	scene.ExecuteStep(scene.GetCurrentStep());
+void TitleScene::ExecuteSceneStep()
+{
+	if (currentStep == sceneInit)
+	{
+		currentStep = sceneUpdate;
+	}
+	else if (currentStep == sceneUpdate)
+	{
+		currentStep = sceneTerminate;
+	}
+	else if (currentStep == sceneTerminate)
+	{
+		currentStep = sceneInit;
+	}
 }

@@ -4,49 +4,81 @@
 #include "GameScene.h"
 #include "../Object/Vaccine.h"
 #include "../Object/Virus.h"
+#include "../Object/Stage.h"
 
-Vaccine vaccine;
-Virus virus;
+// ï`âÊÇÃì«Ç›çûÇ›
+int virus_handle = -1;
+int vaccine_handle = -1;
 
-void GameScene::Execute(int sceneStep_)
+
+Vaccine vaccine(vaccine_handle);
+Virus virus(virus_handle);
+Stage stage;
+
+void GameScene::Execute()
 {
-	switch (sceneStep_)
+	switch (currentStep)
 	{
 	case 0:
-		Initialize(sceneStep_);
+		Initialize();
 		break;
 	case 1:
-		Update(sceneStep_);
+		Update();
 		break;
 	case 2:
-		Terminate(sceneStep_);
+		Terminate();
+		break;
 	}
 }
 
-void GameScene::Initialize(int sceneStep_)
+void GameScene::Initialize()
 {
+	virus_handle = LoadGraph("Res/Object/Virus.png");
+	vaccine_handle = LoadGraph("Res/Object/Vaccine.png");
 
-	scene.ExecuteStep(sceneStep_);
+	ExecuteSceneStep();
 }
 
-void GameScene::Update(int sceneStep_)
+void GameScene::Update()
 {
 
 	ClearDrawScreen();
 
-	DrawCircle(300, 300, 3, GetColor(0, 255, 255), true);
+	stage.DrawStage();
+	//DrawCircle(500, 500, 10, GetColor(255, 255, 255), true);
+
+	vaccine.Draw();
+	virus.Draw();
 
 	ScreenFlip();
 
-	if (CheckHitKey(KEY_INPUT_RETURN))
+	if (CheckHitKey(KEY_INPUT_TAB))
 	{
-		scene.ExecuteStep(scene.GetCurrentStep());
+		ExecuteSceneStep();
 	}
 }
 
-void GameScene::Terminate(int sceneStep_)
+void GameScene::Terminate()
 {
+	vaccine.Delete();
+	virus.Delete();
 
-	scene.ExecuteType(scene.GetCurrentType());
-	scene.ExecuteStep(scene.GetCurrentStep());
+	ExecuteSceneStep();
+	ExecuteScenetype();
+}
+
+void GameScene::ExecuteSceneStep()
+{
+	if (currentStep == sceneInit)
+	{
+		currentStep = sceneUpdate;
+	}
+	else if (currentStep == sceneUpdate)
+	{
+		currentStep = sceneTerminate;
+	}
+	else if (currentStep == sceneTerminate)
+	{
+		currentStep = sceneInit;
+	}
 }

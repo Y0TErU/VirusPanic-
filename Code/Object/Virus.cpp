@@ -2,12 +2,13 @@
 #include <DxLib.h>
 #include <math.h>
 
-Virus::Virus()
+
+Virus::Virus(int texture_handle_)
 {
 	isActive = true;
-	posX = 100.0f;
-	posY = 100.0f;
-	handle = 0;
+	posX = 500.0f;
+	posY = 500.0f;
+	handle = texture_handle_;
 
 }
 
@@ -33,11 +34,10 @@ void Virus::Update(float x,float y)
 
 void Virus::Draw()
 {
-	if (handle == 0)	//“Ç‚İ‚İ‚ªˆê“x‚¾‚¯‚³‚ê‚é‚æ‚¤‚É‚·‚é
+	if (handle == -1)
 	{
-		handle = LoadGraph("Res/Object/Virus.png");
+		return;
 	}
-
 	if (isActive == true)
 	{
 		DrawGraph(posX, posY, handle, true);

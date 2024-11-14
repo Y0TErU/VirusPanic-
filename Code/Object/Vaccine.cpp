@@ -2,56 +2,56 @@
 #include <DxLib.h>
 #include <math.h>
 
-Vaccine::Vaccine()
+Vaccine::Vaccine(int texture_handle_)
 {
 	isActive = true;
-	posX = 500.0;
-	posY = 100;
-	
-	handle = 0;
+	posX = 100.0f;
+	posY = 100.0f;
+	handle = texture_handle_;
 }
 
 void Vaccine::Update()
 {
-	// 斜め入力防止
-	bool moving_x{ false };
-	bool moving_y{ false };
 
-	// 上左右キーの入力で移動する処理を実装
-	if (CheckHitKey(KEY_INPUT_W) && moving_x == false)
+	if (isActive == true)
 	{
-		posY -= speed;
-		moving_y = true;
-	}
+		// 斜め入力防止
+		bool moving_x{ false };
+		bool moving_y{ false };
 
-	if (CheckHitKey(KEY_INPUT_S) && moving_x == false)
-	{
-		posY += speed;
-		moving_y = true;
-	}
+		// 上左右キーの入力で移動する処理を実装
+		if (CheckHitKey(KEY_INPUT_W) && moving_x == false)
+		{
+			posY -= speed;
+			moving_y = true;
+		}
 
-	if (CheckHitKey(KEY_INPUT_A) && moving_y == false)
-	{
-		posX -= speed;
-		moving_x = true;
-	}
+		if (CheckHitKey(KEY_INPUT_S) && moving_x == false)
+		{
+			posY += speed;
+			moving_y = true;
+		}
 
-	if (CheckHitKey(KEY_INPUT_D) && moving_y == false)
-	{
-		posX += speed;
-		moving_x = true;
+		if (CheckHitKey(KEY_INPUT_A) && moving_y == false)
+		{
+			posX -= speed;
+			moving_x = true;
+		}
+
+		if (CheckHitKey(KEY_INPUT_D) && moving_y == false)
+		{
+			posX += speed;
+			moving_x = true;
+		}
 	}
-	
-	
 }
 
 void Vaccine::Draw()
 {
-	if (handle == 0)	//読み込みが一度だけされるようにする
+	if (handle == -1)
 	{
-		handle = LoadGraph("Res/Object/vaccine.png");
+		return;
 	}
-
 	if (isActive == true)
 	{
 		DrawGraph(posX, posY, handle, true);
