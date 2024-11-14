@@ -14,7 +14,7 @@ private:
 	float posY;
 	int handle;
 	float speed{ 4.5f };
-	bool isActive{ false };
+	bool isActive;
 	const int createNam{ 5 };
 
 };

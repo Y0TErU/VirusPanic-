@@ -41,14 +41,17 @@ void GameScene::Initialize()
 
 void GameScene::Update()
 {
+	vaccine.Update();
+	virus.Update(vaccine.GetPosX(),vaccine.GetPosY());
 
 	ClearDrawScreen();
+	
 
-	stage.DrawStage();
-	//DrawCircle(500, 500, 10, GetColor(255, 255, 255), true);
-
+	stage.Draw();
 	vaccine.Draw();
 	virus.Draw();
+
+	//DrawCircle(500, 500, 10, GetColor(255, 255, 255), true);
 
 	ScreenFlip();
 

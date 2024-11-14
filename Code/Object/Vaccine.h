@@ -14,7 +14,7 @@ public:
 private:
 	float posX;
 	float posY;
-	bool isActive{ false };
+	bool isActive;
 	int handle;
 	float speed{ 4.0f };
 
